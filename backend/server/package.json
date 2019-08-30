@@ -1,0 +1,35 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "grpc-tools": "^1.8.0",
+    "grpc_tools_node_protoc_ts": "^2.5.4",
+    "prettier": "^1.18.2",
+    "tslint": "^5.18.0",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-plugin-prettier": "^2.0.1"
+  },
+  "dependencies": {
+    "@types/google-protobuf": "^3.7.1",
+    "@types/node": "^12.7.2",
+    "google-protobuf": "^3.9.1",
+    "grpc": "^1.22.2",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.5.3"
+  },
+  "prettier": {
+    "semi": true,
+    "singleQuote": true,
+    "printWidth": 120,
+    "trailingComma": "es5"
+  },
+  "scripts": {
+    "node": "ts-node src/index.ts",
+    "tslint:prettier-check": "tslint-config-prettier-check ./tslint.json",
+    "tslint": "tslint --fix --force --format stylish --project ./tsconfig.json ./{src,__tests__}/**/*.{ts,tsx}",
+    "prettier": "prettier --write ./{src,__tests__}/**/*.{ts,tsx}",
+    "protoc": "bash ./protoc.sh"
+  }
+}
