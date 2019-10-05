@@ -1,34 +1,24 @@
-import React, { useState, FormEvent } from 'react';
-import { Message as ProtoMessage } from '../proto/MessageService_pb';
-import attatchMessageServiceClient, { MessageServiceClientAttached } from './attatchMessageServiceClient';
+import * as React from 'react';
+import PostMessageForm from './PostMessageForm';
+import SetAuthorNameForm from './SetAuthorNameForm';
 
-const PostForm: React.FC<{ initialInputText?: string } & MessageServiceClientAttached> = ({
-  initialInputText = '',
-  client,
-}) => {
-  const [inputText, setInputText] = useState(initialInputText);
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+class PostForm extends React.Component<{}, { authorName: string; authorNameInputted: boolean }> {
+  state = { authorName: '', authorNameInputted: false };
 
-    const currentDate = Date.now();
-    const message = new ProtoMessage();
-
-    message.setAuthorName('hoge');
-    message.setCreateTime(currentDate);
-    message.setId('hoge' + currentDate.toString());
-    message.setText(inputText);
-    client.postMessage(message, (error, response) => console.log(error == null ? error : response));
-
-    setInputText('');
+  setAuthorName = (authorName: string) => {
+    this.setState({
+      authorName,
+      authorNameInputted: authorName.length > 0,
+    });
   };
-  return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="inputText" value={inputText} onChange={e => setInputText(e.target.value)} />
-        <input type="submit" value="Submit" />
-      </form>
-    </div>
-  );
-};
 
-export default attatchMessageServiceClient(PostForm);
+  render() {
+    return this.state.authorNameInputted ? (
+      <PostMessageForm authorName={this.state.authorName} />
+    ) : (
+      <SetAuthorNameForm setAuthorNameFunc={this.setAuthorName} />
+    );
+  }
+}
+
+export default PostForm;

@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
+    "@types/config": "0.0.34",
     "grpc-tools": "^1.8.0",
     "grpc_tools_node_protoc_ts": "^2.5.4",
     "prettier": "^1.18.2",
@@ -12,12 +13,17 @@
     "tslint-plugin-prettier": "^2.0.1"
   },
   "dependencies": {
+    "@google-cloud/pubsub": "^0.31.1",
     "@types/google-protobuf": "^3.7.1",
+    "@types/mysql": "^2.15.7",
     "@types/node": "^12.7.2",
+    "@types/uuid": "^3.4.5",
     "google-protobuf": "^3.9.1",
     "grpc": "^1.22.2",
+    "mysql": "^2.17.1",
     "ts-node": "^8.3.0",
-    "typescript": "^3.5.3"
+    "typescript": "^3.5.3",
+    "uuid": "^3.3.3"
   },
   "prettier": {
     "semi": true,

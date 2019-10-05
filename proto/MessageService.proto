@@ -1,20 +1,34 @@
 syntax = "proto3";
 
+import "google/protobuf/empty.proto";
+
 service MessageService {
-  rpc GetMessageStream(GetMessageStreamRequest) returns (stream Message);
+  rpc GetMessageStream(google.protobuf.Empty) returns (stream Message);
+  rpc GetLatestMessageList(google.protobuf.Empty) returns (GetLatestMessagesResponse);
+  rpc GetMessageListByIdRange(GetMessagesByIdRangeRequest) returns (GetMessagesByIdRangeResponse);
   rpc PostMessage(Message) returns (PostMessageResponse);
 }
 
-message GetMessageStreamRequest {}
+message GetLatestMessagesResponse {
+  repeated Message message = 1;
+  int32 last_id = 2;
+}
+
+message GetMessagesByIdRangeRequest {
+  int32 id_from = 1;
+}
+
+message GetMessagesByIdRangeResponse {
+  repeated Message message = 1;
+  int32 last_id = 2;
+}
 
 message PostMessageResponse {
-  string message_id = 1;
-  string status = 2;
+  string status = 1;
 }
 
 message Message {
-  string id = 1;
-  string text = 2;
-  int64 create_time = 3;
-  string author_name = 4;
+  string text = 1;
+  int64 create_time = 2;
+  string author_name = 3;
 }

@@ -1,0 +1,6 @@
+CREATE TABLE messages(
+  id INT AUTO_INCREMENT NOT NULL PRIMARY KEY, 
+  text VARCHAR(1000) NOT NULL,
+  create_time BIGINT NOT NULL,
+  author_name VARCHAR(100) NOT NULL
+);

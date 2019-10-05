@@ -2,6 +2,7 @@
 // file: MessageService.proto
 
 import * as MessageService_pb from "./MessageService_pb";
+import * as google_protobuf_empty_pb from "google-protobuf/google/protobuf/empty_pb";
 import {grpc} from "@improbable-eng/grpc-web";
 
 type MessageServiceGetMessageStream = {
@@ -9,8 +10,26 @@ type MessageServiceGetMessageStream = {
   readonly service: typeof MessageService;
   readonly requestStream: false;
   readonly responseStream: true;
-  readonly requestType: typeof MessageService_pb.GetMessageStreamRequest;
+  readonly requestType: typeof google_protobuf_empty_pb.Empty;
   readonly responseType: typeof MessageService_pb.Message;
+};
+
+type MessageServiceGetLatestMessageList = {
+  readonly methodName: string;
+  readonly service: typeof MessageService;
+  readonly requestStream: false;
+  readonly responseStream: false;
+  readonly requestType: typeof google_protobuf_empty_pb.Empty;
+  readonly responseType: typeof MessageService_pb.GetLatestMessagesResponse;
+};
+
+type MessageServiceGetMessageListByIdRange = {
+  readonly methodName: string;
+  readonly service: typeof MessageService;
+  readonly requestStream: false;
+  readonly responseStream: false;
+  readonly requestType: typeof MessageService_pb.GetMessagesByIdRangeRequest;
+  readonly responseType: typeof MessageService_pb.GetMessagesByIdRangeResponse;
 };
 
 type MessageServicePostMessage = {
@@ -25,6 +44,8 @@ type MessageServicePostMessage = {
 export class MessageService {
   static readonly serviceName: string;
   static readonly GetMessageStream: MessageServiceGetMessageStream;
+  static readonly GetLatestMessageList: MessageServiceGetLatestMessageList;
+  static readonly GetMessageListByIdRange: MessageServiceGetMessageListByIdRange;
   static readonly PostMessage: MessageServicePostMessage;
 }
 
@@ -60,7 +81,25 @@ export class MessageServiceClient {
   readonly serviceHost: string;
 
   constructor(serviceHost: string, options?: grpc.RpcOptions);
-  getMessageStream(requestMessage: MessageService_pb.GetMessageStreamRequest, metadata?: grpc.Metadata): ResponseStream<MessageService_pb.Message>;
+  getMessageStream(requestMessage: google_protobuf_empty_pb.Empty, metadata?: grpc.Metadata): ResponseStream<MessageService_pb.Message>;
+  getLatestMessageList(
+    requestMessage: google_protobuf_empty_pb.Empty,
+    metadata: grpc.Metadata,
+    callback: (error: ServiceError|null, responseMessage: MessageService_pb.GetLatestMessagesResponse|null) => void
+  ): UnaryResponse;
+  getLatestMessageList(
+    requestMessage: google_protobuf_empty_pb.Empty,
+    callback: (error: ServiceError|null, responseMessage: MessageService_pb.GetLatestMessagesResponse|null) => void
+  ): UnaryResponse;
+  getMessageListByIdRange(
+    requestMessage: MessageService_pb.GetMessagesByIdRangeRequest,
+    metadata: grpc.Metadata,
+    callback: (error: ServiceError|null, responseMessage: MessageService_pb.GetMessagesByIdRangeResponse|null) => void
+  ): UnaryResponse;
+  getMessageListByIdRange(
+    requestMessage: MessageService_pb.GetMessagesByIdRangeRequest,
+    callback: (error: ServiceError|null, responseMessage: MessageService_pb.GetMessagesByIdRangeResponse|null) => void
+  ): UnaryResponse;
   postMessage(
     requestMessage: MessageService_pb.Message,
     metadata: grpc.Metadata,

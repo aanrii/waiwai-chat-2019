@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-server
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend-server
+  template:
+    metadata:
+      labels:
+        app: backend-server
+    spec:
+      containers:
+        - name: server
+          image: gcr.io/waiwai-chat-grpc/server:v1.1
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 9090
+          env:
+          - name: GOOGLE_APPLICATION_CREDENTIALS
+            value: /secrets/service_account/credentials.json
+          - name: MYSQL_USER
+            valueFrom:
+              secretKeyRef:
+                name: mysql
+                key: user
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mysql
+                key: password
+          volumeMounts:
+            - name: service-account-credentials
+              mountPath: /secrets/service_account
+              readOnly: true
+        - name: cloudsql-proxy
+          image: gcr.io/cloudsql-docker/gce-proxy:1.11
+          command: ["/cloud_sql_proxy",
+                    "-instances=waiwai-chat-grpc:asia-northeast1:prod=tcp:3306",
+                    "-credential_file=/secrets/service_account/credentials.json"]
+          securityContext:
+            runAsUser: 2  # non-root user
+            allowPrivilegeEscalation: false
+          volumeMounts:
+            - name: service-account-credentials
+              mountPath: /secrets/service_account
+              readOnly: true
+      volumes:
+        - name: service-account-credentials
+          secret: 
+            secretName: service-account-credentials

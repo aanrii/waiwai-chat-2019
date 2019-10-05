@@ -1,8 +1,10 @@
-/* eslint-disable */
 // package: 
 // file: MessageService.proto
 
+/* eslint-disable */
+
 var MessageService_pb = require("./MessageService_pb");
+var google_protobuf_empty_pb = require("google-protobuf/google/protobuf/empty_pb");
 var grpc = require("@improbable-eng/grpc-web").grpc;
 
 var MessageService = (function () {
@@ -16,8 +18,26 @@ MessageService.GetMessageStream = {
   service: MessageService,
   requestStream: false,
   responseStream: true,
-  requestType: MessageService_pb.GetMessageStreamRequest,
+  requestType: google_protobuf_empty_pb.Empty,
   responseType: MessageService_pb.Message
+};
+
+MessageService.GetLatestMessageList = {
+  methodName: "GetLatestMessageList",
+  service: MessageService,
+  requestStream: false,
+  responseStream: false,
+  requestType: google_protobuf_empty_pb.Empty,
+  responseType: MessageService_pb.GetLatestMessagesResponse
+};
+
+MessageService.GetMessageListByIdRange = {
+  methodName: "GetMessageListByIdRange",
+  service: MessageService,
+  requestStream: false,
+  responseStream: false,
+  requestType: MessageService_pb.GetMessagesByIdRangeRequest,
+  responseType: MessageService_pb.GetMessagesByIdRangeResponse
 };
 
 MessageService.PostMessage = {
@@ -70,6 +90,68 @@ MessageServiceClient.prototype.getMessageStream = function getMessageStream(requ
     },
     cancel: function () {
       listeners = null;
+      client.close();
+    }
+  };
+};
+
+MessageServiceClient.prototype.getLatestMessageList = function getLatestMessageList(requestMessage, metadata, callback) {
+  if (arguments.length === 2) {
+    callback = arguments[1];
+  }
+  var client = grpc.unary(MessageService.GetLatestMessageList, {
+    request: requestMessage,
+    host: this.serviceHost,
+    metadata: metadata,
+    transport: this.options.transport,
+    debug: this.options.debug,
+    onEnd: function (response) {
+      if (callback) {
+        if (response.status !== grpc.Code.OK) {
+          var err = new Error(response.statusMessage);
+          err.code = response.status;
+          err.metadata = response.trailers;
+          callback(err, null);
+        } else {
+          callback(null, response.message);
+        }
+      }
+    }
+  });
+  return {
+    cancel: function () {
+      callback = null;
+      client.close();
+    }
+  };
+};
+
+MessageServiceClient.prototype.getMessageListByIdRange = function getMessageListByIdRange(requestMessage, metadata, callback) {
+  if (arguments.length === 2) {
+    callback = arguments[1];
+  }
+  var client = grpc.unary(MessageService.GetMessageListByIdRange, {
+    request: requestMessage,
+    host: this.serviceHost,
+    metadata: metadata,
+    transport: this.options.transport,
+    debug: this.options.debug,
+    onEnd: function (response) {
+      if (callback) {
+        if (response.status !== grpc.Code.OK) {
+          var err = new Error(response.statusMessage);
+          err.code = response.status;
+          err.metadata = response.trailers;
+          callback(err, null);
+        } else {
+          callback(null, response.message);
+        }
+      }
+    }
+  });
+  return {
+    cancel: function () {
+      callback = null;
       client.close();
     }
   };

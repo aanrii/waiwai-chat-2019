@@ -2,27 +2,81 @@
 // file: MessageService.proto
 
 import * as jspb from "google-protobuf";
+import * as google_protobuf_empty_pb from "google-protobuf/google/protobuf/empty_pb";
 
-export class GetMessageStreamRequest extends jspb.Message {
+export class GetLatestMessagesResponse extends jspb.Message {
+  clearMessageList(): void;
+  getMessageList(): Array<Message>;
+  setMessageList(value: Array<Message>): void;
+  addMessage(value?: Message, index?: number): Message;
+
+  getLastId(): number;
+  setLastId(value: number): void;
+
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): GetMessageStreamRequest.AsObject;
-  static toObject(includeInstance: boolean, msg: GetMessageStreamRequest): GetMessageStreamRequest.AsObject;
+  toObject(includeInstance?: boolean): GetLatestMessagesResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: GetLatestMessagesResponse): GetLatestMessagesResponse.AsObject;
   static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
   static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-  static serializeBinaryToWriter(message: GetMessageStreamRequest, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): GetMessageStreamRequest;
-  static deserializeBinaryFromReader(message: GetMessageStreamRequest, reader: jspb.BinaryReader): GetMessageStreamRequest;
+  static serializeBinaryToWriter(message: GetLatestMessagesResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetLatestMessagesResponse;
+  static deserializeBinaryFromReader(message: GetLatestMessagesResponse, reader: jspb.BinaryReader): GetLatestMessagesResponse;
 }
 
-export namespace GetMessageStreamRequest {
+export namespace GetLatestMessagesResponse {
   export type AsObject = {
+    messageList: Array<Message.AsObject>,
+    lastId: number,
+  }
+}
+
+export class GetMessagesByIdRangeRequest extends jspb.Message {
+  getIdFrom(): number;
+  setIdFrom(value: number): void;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GetMessagesByIdRangeRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: GetMessagesByIdRangeRequest): GetMessagesByIdRangeRequest.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: GetMessagesByIdRangeRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetMessagesByIdRangeRequest;
+  static deserializeBinaryFromReader(message: GetMessagesByIdRangeRequest, reader: jspb.BinaryReader): GetMessagesByIdRangeRequest;
+}
+
+export namespace GetMessagesByIdRangeRequest {
+  export type AsObject = {
+    idFrom: number,
+  }
+}
+
+export class GetMessagesByIdRangeResponse extends jspb.Message {
+  clearMessageList(): void;
+  getMessageList(): Array<Message>;
+  setMessageList(value: Array<Message>): void;
+  addMessage(value?: Message, index?: number): Message;
+
+  getLastId(): number;
+  setLastId(value: number): void;
+
+  serializeBinary(): Uint8Array;
+  toObject(includeInstance?: boolean): GetMessagesByIdRangeResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: GetMessagesByIdRangeResponse): GetMessagesByIdRangeResponse.AsObject;
+  static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+  static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+  static serializeBinaryToWriter(message: GetMessagesByIdRangeResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): GetMessagesByIdRangeResponse;
+  static deserializeBinaryFromReader(message: GetMessagesByIdRangeResponse, reader: jspb.BinaryReader): GetMessagesByIdRangeResponse;
+}
+
+export namespace GetMessagesByIdRangeResponse {
+  export type AsObject = {
+    messageList: Array<Message.AsObject>,
+    lastId: number,
   }
 }
 
 export class PostMessageResponse extends jspb.Message {
-  getMessageId(): string;
-  setMessageId(value: string): void;
-
   getStatus(): string;
   setStatus(value: string): void;
 
@@ -38,15 +92,11 @@ export class PostMessageResponse extends jspb.Message {
 
 export namespace PostMessageResponse {
   export type AsObject = {
-    messageId: string,
     status: string,
   }
 }
 
 export class Message extends jspb.Message {
-  getId(): string;
-  setId(value: string): void;
-
   getText(): string;
   setText(value: string): void;
 
@@ -68,7 +118,6 @@ export class Message extends jspb.Message {
 
 export namespace Message {
   export type AsObject = {
-    id: string,
     text: string,
     createTime: number,
     authorName: string,

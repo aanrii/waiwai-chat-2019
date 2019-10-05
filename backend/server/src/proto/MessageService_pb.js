@@ -11,7 +11,11 @@ var jspb = require('google-protobuf');
 var goog = jspb;
 var global = Function('return this')();
 
-goog.exportSymbol('proto.GetMessageStreamRequest', null, global);
+var google_protobuf_empty_pb = require('google-protobuf/google/protobuf/empty_pb.js');
+goog.object.extend(proto, google_protobuf_empty_pb);
+goog.exportSymbol('proto.GetLatestMessagesResponse', null, global);
+goog.exportSymbol('proto.GetMessagesByIdRangeRequest', null, global);
+goog.exportSymbol('proto.GetMessagesByIdRangeResponse', null, global);
 goog.exportSymbol('proto.Message', null, global);
 goog.exportSymbol('proto.PostMessageResponse', null, global);
 
@@ -25,12 +29,207 @@ goog.exportSymbol('proto.PostMessageResponse', null, global);
  * @extends {jspb.Message}
  * @constructor
  */
-proto.GetMessageStreamRequest = function(opt_data) {
+proto.GetLatestMessagesResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.GetLatestMessagesResponse.repeatedFields_, null);
+};
+goog.inherits(proto.GetLatestMessagesResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.GetLatestMessagesResponse.displayName = 'proto.GetLatestMessagesResponse';
+}
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.GetLatestMessagesResponse.repeatedFields_ = [1];
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.GetLatestMessagesResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.GetLatestMessagesResponse.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.GetLatestMessagesResponse} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.GetLatestMessagesResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    messageList: jspb.Message.toObjectList(msg.getMessageList(),
+    proto.Message.toObject, includeInstance),
+    lastId: jspb.Message.getFieldWithDefault(msg, 2, 0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.GetLatestMessagesResponse}
+ */
+proto.GetLatestMessagesResponse.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.GetLatestMessagesResponse;
+  return proto.GetLatestMessagesResponse.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.GetLatestMessagesResponse} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.GetLatestMessagesResponse}
+ */
+proto.GetLatestMessagesResponse.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = new proto.Message;
+      reader.readMessage(value,proto.Message.deserializeBinaryFromReader);
+      msg.addMessage(value);
+      break;
+    case 2:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setLastId(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.GetLatestMessagesResponse.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.GetLatestMessagesResponse.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.GetLatestMessagesResponse} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.GetLatestMessagesResponse.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getMessageList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      1,
+      f,
+      proto.Message.serializeBinaryToWriter
+    );
+  }
+  f = message.getLastId();
+  if (f !== 0) {
+    writer.writeInt32(
+      2,
+      f
+    );
+  }
+};
+
+
+/**
+ * repeated Message message = 1;
+ * @return {!Array<!proto.Message>}
+ */
+proto.GetLatestMessagesResponse.prototype.getMessageList = function() {
+  return /** @type{!Array<!proto.Message>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.Message, 1));
+};
+
+
+/** @param {!Array<!proto.Message>} value */
+proto.GetLatestMessagesResponse.prototype.setMessageList = function(value) {
+  jspb.Message.setRepeatedWrapperField(this, 1, value);
+};
+
+
+/**
+ * @param {!proto.Message=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.Message}
+ */
+proto.GetLatestMessagesResponse.prototype.addMessage = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 1, opt_value, proto.Message, opt_index);
+};
+
+
+proto.GetLatestMessagesResponse.prototype.clearMessageList = function() {
+  this.setMessageList([]);
+};
+
+
+/**
+ * optional int32 last_id = 2;
+ * @return {number}
+ */
+proto.GetLatestMessagesResponse.prototype.getLastId = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+};
+
+
+/** @param {number} value */
+proto.GetLatestMessagesResponse.prototype.setLastId = function(value) {
+  jspb.Message.setProto3IntField(this, 2, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.GetMessagesByIdRangeRequest = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
-goog.inherits(proto.GetMessageStreamRequest, jspb.Message);
+goog.inherits(proto.GetMessagesByIdRangeRequest, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
-  proto.GetMessageStreamRequest.displayName = 'proto.GetMessageStreamRequest';
+  proto.GetMessagesByIdRangeRequest.displayName = 'proto.GetMessagesByIdRangeRequest';
 }
 
 
@@ -45,8 +244,8 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-proto.GetMessageStreamRequest.prototype.toObject = function(opt_includeInstance) {
-  return proto.GetMessageStreamRequest.toObject(opt_includeInstance, this);
+proto.GetMessagesByIdRangeRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.GetMessagesByIdRangeRequest.toObject(opt_includeInstance, this);
 };
 
 
@@ -55,13 +254,13 @@ proto.GetMessageStreamRequest.prototype.toObject = function(opt_includeInstance)
  * @param {boolean|undefined} includeInstance Whether to include the JSPB
  *     instance for transitional soy proto support:
  *     http://goto/soy-param-migration
- * @param {!proto.GetMessageStreamRequest} msg The msg instance to transform.
+ * @param {!proto.GetMessagesByIdRangeRequest} msg The msg instance to transform.
  * @return {!Object}
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.GetMessageStreamRequest.toObject = function(includeInstance, msg) {
+proto.GetMessagesByIdRangeRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-
+    idFrom: jspb.Message.getFieldWithDefault(msg, 1, 0)
   };
 
   if (includeInstance) {
@@ -75,29 +274,33 @@ proto.GetMessageStreamRequest.toObject = function(includeInstance, msg) {
 /**
  * Deserializes binary data (in protobuf wire format).
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.GetMessageStreamRequest}
+ * @return {!proto.GetMessagesByIdRangeRequest}
  */
-proto.GetMessageStreamRequest.deserializeBinary = function(bytes) {
+proto.GetMessagesByIdRangeRequest.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.GetMessageStreamRequest;
-  return proto.GetMessageStreamRequest.deserializeBinaryFromReader(msg, reader);
+  var msg = new proto.GetMessagesByIdRangeRequest;
+  return proto.GetMessagesByIdRangeRequest.deserializeBinaryFromReader(msg, reader);
 };
 
 
 /**
  * Deserializes binary data (in protobuf wire format) from the
  * given reader into the given message object.
- * @param {!proto.GetMessageStreamRequest} msg The message object to deserialize into.
+ * @param {!proto.GetMessagesByIdRangeRequest} msg The message object to deserialize into.
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.GetMessageStreamRequest}
+ * @return {!proto.GetMessagesByIdRangeRequest}
  */
-proto.GetMessageStreamRequest.deserializeBinaryFromReader = function(msg, reader) {
+proto.GetMessagesByIdRangeRequest.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
     }
     var field = reader.getFieldNumber();
     switch (field) {
+    case 1:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setIdFrom(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -111,9 +314,9 @@ proto.GetMessageStreamRequest.deserializeBinaryFromReader = function(msg, reader
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.GetMessageStreamRequest.prototype.serializeBinary = function() {
+proto.GetMessagesByIdRangeRequest.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  proto.GetMessageStreamRequest.serializeBinaryToWriter(this, writer);
+  proto.GetMessagesByIdRangeRequest.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
 };
 
@@ -121,12 +324,229 @@ proto.GetMessageStreamRequest.prototype.serializeBinary = function() {
 /**
  * Serializes the given message to binary data (in protobuf wire
  * format), writing to the given BinaryWriter.
- * @param {!proto.GetMessageStreamRequest} message
+ * @param {!proto.GetMessagesByIdRangeRequest} message
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.GetMessageStreamRequest.serializeBinaryToWriter = function(message, writer) {
+proto.GetMessagesByIdRangeRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
+  f = message.getIdFrom();
+  if (f !== 0) {
+    writer.writeInt32(
+      1,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional int32 id_from = 1;
+ * @return {number}
+ */
+proto.GetMessagesByIdRangeRequest.prototype.getIdFrom = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/** @param {number} value */
+proto.GetMessagesByIdRangeRequest.prototype.setIdFrom = function(value) {
+  jspb.Message.setProto3IntField(this, 1, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.GetMessagesByIdRangeResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.GetMessagesByIdRangeResponse.repeatedFields_, null);
+};
+goog.inherits(proto.GetMessagesByIdRangeResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.GetMessagesByIdRangeResponse.displayName = 'proto.GetMessagesByIdRangeResponse';
+}
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.GetMessagesByIdRangeResponse.repeatedFields_ = [1];
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.GetMessagesByIdRangeResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.GetMessagesByIdRangeResponse.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.GetMessagesByIdRangeResponse} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.GetMessagesByIdRangeResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    messageList: jspb.Message.toObjectList(msg.getMessageList(),
+    proto.Message.toObject, includeInstance),
+    lastId: jspb.Message.getFieldWithDefault(msg, 2, 0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.GetMessagesByIdRangeResponse}
+ */
+proto.GetMessagesByIdRangeResponse.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.GetMessagesByIdRangeResponse;
+  return proto.GetMessagesByIdRangeResponse.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.GetMessagesByIdRangeResponse} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.GetMessagesByIdRangeResponse}
+ */
+proto.GetMessagesByIdRangeResponse.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = new proto.Message;
+      reader.readMessage(value,proto.Message.deserializeBinaryFromReader);
+      msg.addMessage(value);
+      break;
+    case 2:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setLastId(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.GetMessagesByIdRangeResponse.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.GetMessagesByIdRangeResponse.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.GetMessagesByIdRangeResponse} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.GetMessagesByIdRangeResponse.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getMessageList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      1,
+      f,
+      proto.Message.serializeBinaryToWriter
+    );
+  }
+  f = message.getLastId();
+  if (f !== 0) {
+    writer.writeInt32(
+      2,
+      f
+    );
+  }
+};
+
+
+/**
+ * repeated Message message = 1;
+ * @return {!Array<!proto.Message>}
+ */
+proto.GetMessagesByIdRangeResponse.prototype.getMessageList = function() {
+  return /** @type{!Array<!proto.Message>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.Message, 1));
+};
+
+
+/** @param {!Array<!proto.Message>} value */
+proto.GetMessagesByIdRangeResponse.prototype.setMessageList = function(value) {
+  jspb.Message.setRepeatedWrapperField(this, 1, value);
+};
+
+
+/**
+ * @param {!proto.Message=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.Message}
+ */
+proto.GetMessagesByIdRangeResponse.prototype.addMessage = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 1, opt_value, proto.Message, opt_index);
+};
+
+
+proto.GetMessagesByIdRangeResponse.prototype.clearMessageList = function() {
+  this.setMessageList([]);
+};
+
+
+/**
+ * optional int32 last_id = 2;
+ * @return {number}
+ */
+proto.GetMessagesByIdRangeResponse.prototype.getLastId = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+};
+
+
+/** @param {number} value */
+proto.GetMessagesByIdRangeResponse.prototype.setLastId = function(value) {
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -177,8 +597,7 @@ proto.PostMessageResponse.prototype.toObject = function(opt_includeInstance) {
  */
 proto.PostMessageResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    messageId: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    status: jspb.Message.getFieldWithDefault(msg, 2, "")
+    status: jspb.Message.getFieldWithDefault(msg, 1, "")
   };
 
   if (includeInstance) {
@@ -217,10 +636,6 @@ proto.PostMessageResponse.deserializeBinaryFromReader = function(msg, reader) {
     switch (field) {
     case 1:
       var value = /** @type {string} */ (reader.readString());
-      msg.setMessageId(value);
-      break;
-    case 2:
-      var value = /** @type {string} */ (reader.readString());
       msg.setStatus(value);
       break;
     default:
@@ -252,50 +667,28 @@ proto.PostMessageResponse.prototype.serializeBinary = function() {
  */
 proto.PostMessageResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getMessageId();
+  f = message.getStatus();
   if (f.length > 0) {
     writer.writeString(
       1,
       f
     );
   }
-  f = message.getStatus();
-  if (f.length > 0) {
-    writer.writeString(
-      2,
-      f
-    );
-  }
 };
 
 
 /**
- * optional string message_id = 1;
+ * optional string status = 1;
  * @return {string}
  */
-proto.PostMessageResponse.prototype.getMessageId = function() {
+proto.PostMessageResponse.prototype.getStatus = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
 /** @param {string} value */
-proto.PostMessageResponse.prototype.setMessageId = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
-};
-
-
-/**
- * optional string status = 2;
- * @return {string}
- */
-proto.PostMessageResponse.prototype.getStatus = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
-};
-
-
-/** @param {string} value */
 proto.PostMessageResponse.prototype.setStatus = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -346,10 +739,9 @@ proto.Message.prototype.toObject = function(opt_includeInstance) {
  */
 proto.Message.toObject = function(includeInstance, msg) {
   var f, obj = {
-    id: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    text: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    createTime: jspb.Message.getFieldWithDefault(msg, 3, 0),
-    authorName: jspb.Message.getFieldWithDefault(msg, 4, "")
+    text: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    createTime: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    authorName: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
   if (includeInstance) {
@@ -388,17 +780,13 @@ proto.Message.deserializeBinaryFromReader = function(msg, reader) {
     switch (field) {
     case 1:
       var value = /** @type {string} */ (reader.readString());
-      msg.setId(value);
-      break;
-    case 2:
-      var value = /** @type {string} */ (reader.readString());
       msg.setText(value);
       break;
-    case 3:
+    case 2:
       var value = /** @type {number} */ (reader.readInt64());
       msg.setCreateTime(value);
       break;
-    case 4:
+    case 3:
       var value = /** @type {string} */ (reader.readString());
       msg.setAuthorName(value);
       break;
@@ -431,31 +819,24 @@ proto.Message.prototype.serializeBinary = function() {
  */
 proto.Message.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getId();
+  f = message.getText();
   if (f.length > 0) {
     writer.writeString(
       1,
       f
     );
   }
-  f = message.getText();
-  if (f.length > 0) {
-    writer.writeString(
-      2,
-      f
-    );
-  }
   f = message.getCreateTime();
   if (f !== 0) {
     writer.writeInt64(
-      3,
+      2,
       f
     );
   }
   f = message.getAuthorName();
   if (f.length > 0) {
     writer.writeString(
-      4,
+      3,
       f
     );
   }
@@ -463,62 +844,47 @@ proto.Message.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
- * optional string id = 1;
+ * optional string text = 1;
  * @return {string}
  */
-proto.Message.prototype.getId = function() {
+proto.Message.prototype.getText = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
 /** @param {string} value */
-proto.Message.prototype.setId = function(value) {
+proto.Message.prototype.setText = function(value) {
   jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
 /**
- * optional string text = 2;
- * @return {string}
- */
-proto.Message.prototype.getText = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
-};
-
-
-/** @param {string} value */
-proto.Message.prototype.setText = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
-};
-
-
-/**
- * optional int64 create_time = 3;
+ * optional int64 create_time = 2;
  * @return {number}
  */
 proto.Message.prototype.getCreateTime = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
 };
 
 
 /** @param {number} value */
 proto.Message.prototype.setCreateTime = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value);
+  jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
 /**
- * optional string author_name = 4;
+ * optional string author_name = 3;
  * @return {string}
  */
 proto.Message.prototype.getAuthorName = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
 
 /** @param {string} value */
 proto.Message.prototype.setAuthorName = function(value) {
-  jspb.Message.setProto3StringField(this, 4, value);
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 

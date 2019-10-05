@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-proxy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend-proxy
+  template:
+    metadata:
+      labels:
+        app: backend-proxy
+    spec:
+      containers:
+      - name: backend-proxy
+        image: envoyproxy/envoy-alpine:v1.9.1
+        ports:
+        - name: http
+          containerPort: 443
+        volumeMounts:
+        - name: config
+          mountPath: /etc/envoy
+        - name: certs
+          mountPath: /etc/ssl/envoy
+        readinessProbe:
+          httpGet:
+            scheme: HTTPS
+            path: /healthz
+            httpHeaders:
+            - name: x-envoy-livenessprobe
+              value: healthz
+            port: 443
+          initialDelaySeconds: 3
+        livenessProbe:
+          httpGet:
+            scheme: HTTPS
+            path: /healthz
+            httpHeaders:
+            - name: x-envoy-livenessprobe
+              value: healthz
+            port: 443
+          initialDelaySeconds: 10
+      volumes:
+      - name: config
+        configMap:
+          name: backend-proxy-conf
+      - name: certs
+        secret:
+          secretName: cert-manager-tls

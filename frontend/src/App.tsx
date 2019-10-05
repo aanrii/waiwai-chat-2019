@@ -1,12 +1,10 @@
-import React from 'react';
-import PostForm from './components/PostForm';
-import MessageList from './components/MessageList';
+import * as React from 'react';
+import Main from './components/Main';
 
 const App: React.FC = () => {
   return (
     <div>
-      <PostForm />
-      <MessageList />
+      <Main />
     </div>
   );
 };

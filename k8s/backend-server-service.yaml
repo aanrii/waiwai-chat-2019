@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-server
+spec:
+  selector: 
+    app: backend-server
+  type: ClusterIP
+  clusterIP: None  # headless service
+  ports:
+  - name: grpcweb-backend-server
+    protocol: TCP
+    port: 9090
